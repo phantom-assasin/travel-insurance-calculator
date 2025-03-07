@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form with Toggle</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <form id="travel-form">
+        <div class="mb-3">
+          <label class="form-label">Select Area</label>
+          <select class="form-select" name="area">
+            <option value="area1">Area 1</option>
+            <option value="area2">Area 2</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Select Plan</label>
+          <select class="form-select" name="plan">
+            <option value="plan1">Plan 1</option>
+            <option value="plan2">Plan 2</option>
+            <option value="plan3">Plan 3</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Departure Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="departure_date"
+            name="departure_date"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Return Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="return_date"
+            name="return_date"
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="covid_addon" name="covid_addon" />
+          <label class="form-check-label" for="covid_addon"
+            >Covid-19 Add-On</label
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("travel-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+          data.covid_addon = formData.has("covid_addon");
+
+          const params = new URLSearchParams(formData);
+
+          fetch(`/calculate?${params.toString()}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              alert("Calculation result: " + JSON.stringify(result));
+            })
+            .catch((error) => alert("Error:", error));
+        });
+    </script>
+  </body>
+</html>
