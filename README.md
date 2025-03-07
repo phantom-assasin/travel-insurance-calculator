@@ -16,8 +16,8 @@ A FastAPI-based application that calculates insurance prices based on area, plan
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/phantom-assasin/travel-insurance-calculator
+cd ./travel-insurance-calculator
 ```
 
 2. Create a virtual environment:
